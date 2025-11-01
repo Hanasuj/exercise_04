@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("V:/MPA/MPAPRG/exercise_04")
+setwd("E:/asdghjk/skola/VUT Brno/inzinier/4rocnik/PRG")
 
 ## Task 1 - coin change
 ReturnCoins <- function(M){
@@ -30,29 +30,33 @@ print(UniversalReturnCoins(17.8, c(2,1,0.5,0.2,0.1)))
 
 ## Task 3
 Chocolate <- function(M, row, col, bars){
-  
-  if(M[(row+1),col] > M[(row+1),(col+1)]){
-    bars <- bars + (M[(row+1),col])
-    row <- row + 1
+  if (row == nrow(my_matrix)){
+    return(M[row, col])
   }else{
-    bars <- bars + (M[(row+1),(col+1)])
-    row <- row + 1
-    col <- col + 1
+    bars <- M[row, col]
+    down <- Chocolate(M, row + 1, col)
+    diagonal <- Chocolate(M, row + 1, col + 1)
+    return(max(down, diagonal) + M[row, col])
   }
-  print(bars)
-  
-  if (row < dim(M)[1]){
-    Chocolate(M, row, col, bars)
-  }
-  return(bars)
 }
 
-my_matrix <- matrix(c(3,1,5,1,0,4,3,2,0,0,0,6,0,0,0,7), nrow = 4, ncol = 4)
 
+my_matrix <- matrix(c(3,1,5,1,0,4,3,2,0,0,0,6,0,0,0,7), nrow = 4, ncol = 4)
 print(Chocolate(my_matrix,1,1,3))
 
+## Task 4
+HanoiTowers <- function(n, fromPeg, toPeg){
+  if (n == 1){
+    print(paste("Move disc from", fromPeg, "to", toPeg))
+    return()
+  }
+  emptyPeg <- 6 - fromPeg - toPeg
+  HanoiTowers(n-1, fromPeg, emptyPeg)
+  print(paste("Move disc from", fromPeg, "to", toPeg))
+  HanoiTowers(n-1, emptyPeg, toPeg)
+  return()
+}
 
-
-
+HanoiTowers(5, 1, 3)
 
 
